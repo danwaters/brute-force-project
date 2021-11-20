@@ -28,10 +28,10 @@ Cosine Similarity and Logistic Regression approaches employed feature selection 
 ## The Solutions
 |Solution|Notebook URL|Mean Avg Precision @ 10|Notes|
 |--------|------------|-----------------------|-----|
-|Random Selection Baseline||0.00051|Randomly assign coupons|
-|Logistic Regression #1 (Browsing Data)||0.00028|Worse than baseline performance due to class imbalance.|
+|Random Selection Baseline||**0.00051**|Randomly assign coupons|
+|Logistic Regression #1 (Browsing Data)||<span style="color:red">*0.00028*</span>|Worse than baseline performance due to class imbalance.|
 |Logistic Regression #2 (Browsing Data)||0.00061|Slightly better with class imbalance corrections (stratified splits, scaling, bias tuning, etc)|
-|Cosine Similarity (Purchase History)||0.00269|Great score, computationally expensive|
-|TF Random Forest (Browsing Data) (also tried CART and untuned Boosted Trees with same result)||0.00047|Easy configuration, needs tuning|
-|TF Gradient Boosted Trees (Browsing Data)||0.00263|Amazing results for browsing data|
-|**New since presentation:** Cosine Similarity backfilled with Gradient-Boosed Trees||0.00283|Best results so far.|
+|Cosine Similarity (Purchase History)||<span style="color:green">0.00269</span>|Great score, computationally expensive|
+|TF Random Forest (Browsing Data) (also tried CART and untuned Boosted Trees with same result)||<span style="color:red">*0.00047*</span>|Easy configuration, needs tuning|
+|TF Gradient Boosted Trees (Browsing Data)||<span style="color:green">0.00263</span>|Amazing results for imbalanced browsing data|
+|**New since presentation:** Cosine Similarity backfilled with Gradient-Boosed Trees||<span style="color:green">**0.00283**</span>|Best results so far.|
