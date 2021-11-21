@@ -1,6 +1,16 @@
 # Coupon Purchase Prediction
 ### CSCE 5300.002 - Fall 2021
+
 This repository ([github.com/danwaters/brute-force-project](https://www.github.com/danwaters/brute-force-project)) contains code and artifacts for Team "BruteForce" and our final project submission. This README serves as the project report, as well as the instructions and links for reproducing our work.
+
+Looking at the GitHub repository is encouraged, because GitHub has a very good .ipynb viewer. 
+
+---
+**NOTE** 
+
+It is very important to run the notebooks in Google Colab, as the data files are hosted in Google Drive and acquired via Colab's built-in `!gdown` command.
+
+---
 
 Team members are listed in the separately submitted presentation deck to protect privacy. 
 
@@ -33,8 +43,13 @@ Preprocessing (for everything but the decision tree / random forest approach) co
 
 Cosine Similarity and Logistic Regression approaches employed feature selection to facilitate hybrid collaborative filtering - those coupons which match a user based on demographics or content.
 
+## Evaluation
+The Kaggle competition submission is a .csv file. Each row contains a user ID hash and a space-delimited list of 10 coupons. Kaggle evaluates these submissions against a held-out test data set containing coupons that a user actually purchased during the test period. 
+
+The evaluation criteria is Mean Average Precision (k=10), taking the average precision of the 10 coupons for each user, averaged across all ~22K users.
+
 ## The solutions
-First, a baseline model of random selection was created with the following code. You can also find this code in the [Coupon EDA notebook](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Individual%20Coupon%20EDA.ipynb).
+First, a baseline model of random selection was created with the following code. You can also find this code about halfway down in the [Coupon EDA notebook](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Individual%20Coupon%20EDA.ipynb).
 ```
 # create random baseline
 user_list = df_users['USER_ID_hash']
@@ -52,13 +67,13 @@ df_pred.to_csv('sample_submission.csv', header=True, index=False)
 ```
 |Solution|Notebook URL|Mean Avg Precision @ 10|Notes|
 |--------|------------|-----------------------|-----|
-|Random Selection Baseline|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Individual%20Coupon%20EDA.ipynb)|**0.00051**|Randomly assign coupons|
-|Logistic Regression #1 (Browsing Data)|Evolved into #2. [ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.ipynb)|<span style="color:red">*0.00028*</span>|Worse than baseline performance due to class imbalance.|
-|Logistic Regression #2 (Browsing Data)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.ipynb)|0.00061|Slightly better with class imbalance corrections (stratified splits, scaling, bias tuning, etc)|
-|Cosine Similarity (Purchase History)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Cosine%20Similarity%20between%20Purchased%20Coupons.ipynb)|<span style="color:green">0.00269</span>|Great score, computationally expensive|
+|Random Selection Baseline|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Individual%20Coupon%20EDA.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Individual%20Coupon%20EDA.pdf)|**0.00051**|Randomly assign coupons|
+|Logistic Regression #1 (Browsing Data)|Evolved into #2. [ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.pdf)|<span style="color:red">*0.00028*</span>|Worse than baseline performance due to class imbalance.|
+|Logistic Regression #2 (Browsing Data)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Logistic%20Regression%20and%20Hybrid%20Collaborative%20Filtering.pdf)|0.00061|Slightly better with class imbalance corrections (stratified splits, scaling, bias tuning, etc)|
+|Cosine Similarity (Purchase History)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Cosine%20Similarity%20between%20Purchased%20Coupons.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Cosine%20Similarity%20between%20Purchased%20Coupons.pdf)|<span style="color:green">0.00269</span>|Great score, computationally expensive|
 |TF Random Forest (Browsing Data) (also tried CART and untuned Boosted Trees with same result)|Very minor code changes from the one below; not included here|<span style="color:red">*0.00047*</span>|Easy configuration, needs tuning|
-|TF Gradient Boosted Trees (Browsing Data)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Gradient%20Boosted%20Trees.ipynb)|<span style="color:green">0.00263</span>|Amazing results for imbalanced browsing data|
-|**New since presentation:** Cosine Similarity backfilled with Gradient-Boosed Trees|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Merge%20Cosine%20with%20GBT.ipynb)|<span style="color:green">**0.00283**</span>|Best results so far.|
+|TF Gradient Boosted Trees (Browsing Data)|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Gradient%20Boosted%20Trees.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Gradient%20Boosted%20Trees.pdf)|<span style="color:green">0.00263</span>|Amazing results for imbalanced browsing data|
+|**New since presentation:** Cosine Similarity backfilled with Gradient-Boosed Trees|[ipynb](https://github.com/danwaters/brute-force-project/blob/main/notebooks/ipynb/BruteForce%20-%20Merge%20Cosine%20with%20GBT.ipynb), [pdf](https://github.com/danwaters/brute-force-project/blob/main/notebooks/pdf/BruteForce%20-%20Merge%20Cosine%20with%20GBT.pdf)|<span style="color:green">**0.00283**</span>|Best results so far.|
 
 ## Our Conclusions
 * Browsing history has less-than-expected correlation with purchasing habits. Class imbalance did not help.
